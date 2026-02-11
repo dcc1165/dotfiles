@@ -1,0 +1,14 @@
+*~
+.DS_Store
+.idea/*
+.idea
+*.rom
+*.bin
+*.jpg
+*.jpeg
+*.mp3
+*.mpeg
+*.mpg
+*.pdf
+*.dmg
+__pycache__

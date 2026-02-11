@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+shopt -s xpg_echo
+
+[[ ! -f ~/.dotfiles-old ]] && mkdir ~/.dotfiles-old
+
+now="$(date +'%Y_%m%d%H%M%S')"
+dotfiles=(bash_profile
+   bashrc
+   colors
+   dircolors
+   git-completion.sh
+   git-prompt.sh
+   gitflow_export
+   gitignore_global
+   vimrc
+)
+
+for dotfile in "${dotfiles[@]}"
+do
+    if [[ -f ~/.${dotfile} ]]
+    then
+        echo "Moving ~/.${dotfile} to ~/.dotfiles-old/${dotfile}-${now}"
+        echo "mv ~/.${dotfile} ~/.dotfiles-old/${dotfile}-${now}"
+    fi
+    echo "ln -sf $(pwd)/$dotfile $HOME/.${dotfile}\n"
+done

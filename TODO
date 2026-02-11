@@ -1,0 +1,26 @@
+The goal is to have a "generic" .bashrc file which calls other
+dotfiles.  The dotfiles repo should be ~/.dotfiles or something similar but
+hidden.
+
+An install script symlinks the dotfiles to their proper place.
+This makes it simple when updating dotfiles - a simple 'git pull' in the
+dotfiles repo directory is all that's needed.
+
+
+System dot-files, OS agnostic (hopefully)
+
+.bashrc              - Bash runtime configuration
+.bash_profile        - Bash profile
+.vimrc               - VIM runtime configuarion
+.git-completion.sh   - Completion for Git repos
+.git-prompt.sh       - Git-aware prompt
+.gitconfig           - Global Git config
+.gitflow_export      - Global Git Flow
+.gitignore_global    - Global Git ignore
+
+Future - Split .bashrc into different files:
+bash_functions       - User defined functions - maybe one file for each OS
+                       or have one section for OS-related stuff.
+bash_aliases         - User-defined aliases - same as above
+bash_environment     - Bash environment variables
+bash_colors          - Terminal text colorizations

@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+# Ansi escape sequences of all terminal colors
+# Scripts can source this file to colorize output
+
+shopt -s xpg_echo
+
+# .-------------------------------------------.
+# |   Color       | Foreground  | Background  |
+# +-------------------------------------------+
+# Black           |      30     |     40      |
+# Red             |      31     |     41      |
+# Green           |      32     |     42      |
+# Yellow          |      33     |     43      |
+# Blue            |      34     |     44      |
+# Magenta         |      35     |     45      |
+# Cyan            |      36     |     46      |
+# White           |      37     |     47      |
+# Bright Black    |      90     |    100      |
+# Bright Red      |      91     |    101      |
+# Bright Green    |      92     |    102      |
+# Bright Yellow   |      93     |    103      |
+# Bright Blue     |      94     |    104      |
+# Bright Magenta  |      95     |    105      |
+# Bright Cyan     |      96     |    106      |
+# Bright White    |      97     |    107      |
+# +-------------------------------------------+
+
+# +-----------------------+
+# |    Text Attributes    |
+# +-----------------------+
+      normal="\e[0m";       bold="\e[1m"
+       faint="\e[2m";     italic="\e[3m"
+   underline="\e[4m";      blink="\e[5m"
+     reverse="\e[7m";      invis="\e[8m"
+     normal2="\e[22m"; no_italic="\e[23m"
+no_underline="\e[24m";  no_blink="\e[25m"
+     no_rev="\e[27m"
+
+# +------------------------------+
+# |   Normal Foreground Colors   |
+# +------------------------------+
+  black="\e[30m";    red="\e[31m"
+  green="\e[32m"; yellow="\e[33m"
+   blue="\e[34m"; magenta="\e[35m"
+   cyan="\e[36m";   white="\e[37m"
+default="\e[39m"
+
+# +--------------------------------+
+# |    Bright Foreground Colors    |
+# +--------------------------------+
+  Bblack="\e[90m";     Bred="\e[91m";
+  Bgreen="\e[92m";  Byellow="\e[93m";
+   Bblue="\e[94m"; Bmagenta="\e[95m";
+   Bcyan="\e[96m";   Bwhite="\e[97m"
+
+# +--------------------------------+
+# |    Normal Background Colors    |
+# +--------------------------------+
+  _black="\e[40m";     _red="\e[41m";
+  _green="\e[42m";  _yellow="\e[43m";
+   _blue="\e[44m"; _magenta="\e[45m";
+   _cyan="\e[46m";   _white="\e[47m"
+
+# +--------------------------------+
+# |    Bright Background Colors    |
+# +--------------------------------+
+  _Bblack="\e[100m";     _Bred="\e[101m";
+  _Bgreen="\e[102m";  _Byellow="\e[103m";
+   _Bblue="\e[104m"; _Bmagenta="\e[105m";
+   _Bcyan="\e[106m";   _Bwhite="\e[107m"
