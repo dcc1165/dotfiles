@@ -31,7 +31,7 @@ do
     if [[ -f ~/.${dotfile} ]]
     then
         echo "Moving ~/.${dotfile} to ~/.dotfiles-old/${dotfile}-${now}"
-        mv ~/.${dotfile} ~/.dotfiles-old/${dotfile}-${now}
+        cp -L ~/.${dotfile} ~/.dotfiles-old/${dotfile}-${now}
     fi
     ln -sf $(pwd)/$dotfile $HOME/.${dotfile}
 done
