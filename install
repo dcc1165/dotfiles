@@ -17,6 +17,8 @@ now="$(date +'%Y_%m%d%H%M%S')"
 
 dotfiles=(bash_profile
    bashrc
+   bash_logout
+   bash_profile
    colors
    dircolors
    git-completion.sh
