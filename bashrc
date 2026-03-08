@@ -475,7 +475,7 @@ then
    
       if [[ $(echo ${contype[@]} | grep $parm) ]]
       then
-          vboxmanage modifyvm "Oracle Linux 9.6" --nic1=$parm
+          vboxmanage modifyvm "$1" --nic1=$parm
       else
           echo "Invalid mode: $parm"
       fi
