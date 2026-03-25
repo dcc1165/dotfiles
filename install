@@ -26,10 +26,17 @@ dotfiles=(bash_profile
    gitflow_export
    gitignore_global
    vimrc
+   ssh/config
 )
 
 for dotfile in "${dotfiles[@]}"
 do
+    if [[ "$dotfile" =~ "/" ]]
+    then
+        dname="${dotfile%/*}"
+        [[ ! -d ~/.dotfiles-old/$dname ]] && mkdir ~/.dotfiles-old/$dname
+    fi
+
     if [[ -f ~/.${dotfile} ]]
     then
         echo "Moving ~/.${dotfile} to ~/.dotfiles-old/${dotfile}-${now}"
