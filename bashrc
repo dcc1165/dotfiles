@@ -393,7 +393,8 @@ pwdb() {
 }
 
 sdig() {
-   echo -e "\n$(dig +noquestion +noauthority +noadditional +nostats +nocomments +nocmd $*)\n";
+    digopts="+noquestion +noauthority +noadditional +nostats +nocomments +nocmd"
+    echo -e "\n$(dig $digopts $*)\n";
 }
 
 subs() {
@@ -447,40 +448,6 @@ rmloc() {
 rpmkey() {
     rpm -qp $1 --qf '%{NAME}-%{VERSION}-%{RELEASE} %{SIGPGP:pgpsig} %{SIGGPG:pgpsig}\n'
 }
-
-# Upate NIC type on MacOS
-if [[ "$OS" == "Darwin" ]]
-then
-   vmnic() {
-      declare -a contype
-      contype=("none"
-               "null"
-               "nat"
-               "natnetwork"
-               "bridged"
-               "intnet"
-               "hostonly"
-              )
-   
-      if [[ "$1" == "--help" ||  $# -ne 2 ]]
-      then
-         echo "\nUsage: vmnic <vm-name> <connection-type>\n"
-         echo "Valid connection types:\n\t\c"
-         echo ${contype[@]} | sed -e 's/ /\n\t/g'
-         return
-      fi
-   
-      vm=$1
-      parm="${2:-nil}"
-   
-      if [[ $(echo ${contype[@]} | grep $parm) ]]
-      then
-          vboxmanage modifyvm "$1" --nic1=$parm
-      else
-          echo "Invalid mode: $parm"
-      fi
-   }
-fi
 
 watchfile() { 
    IFS='
