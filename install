@@ -26,6 +26,7 @@ dotfiles=(bash_profile
    gitflow_export
    gitignore_global
    vimrc
+   less_colors
    ssh/config
 )
 

@@ -105,6 +105,10 @@ nrm="\[\e[0m\]"         # No color
 export PS1="${bold}[${red}\u@\h${mag}\$(__git_ps1) ${nrm}${yel}\W${nrm}${bold}]$ ${nrm}"
 # export PS1="\[\e[1m\][\[\e[1;31m\]\u \$(__git_ps1)\[\e[0m\e[1;33m\]\W\[\e[0m\e[1m\]]$ \[\e[0m\]"
 
+#
+# Set colors for LESS
+#
+. ~/.less_colors
 # if [[ ! -f ~/.ls_colors ]]
 # then
 #    [[ -f ~/.dircolors ]] && dircolors -b ~/.dircolors >.ls_colors
@@ -127,6 +131,7 @@ alias funcs='declare -F | grep -v "_"'
 alias killswp='find  . -name .*.swp -exec rm {} \;'
 [[ "$OS" == "Darwin" ]] && alias ls='ls -G'
 [[ "$OS" == "Linux" ]] && alias ls='ls --color=tty'
+alias lessvars="env | grep LESS | cat -v"
 alias myip='curl -s https://postman-echo.com/ip | jq .ip | tr -d "\""'
 alias newbash="sed -e 's/^#\!.*$/#\!\/usr\/bin\/env bash/' -i '' $*"
 [[ "$OS" == "Darwin" ]] && alias preview='open -a preview $*'

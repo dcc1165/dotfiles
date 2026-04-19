@@ -1,0 +1,69 @@
+# annotated by dave eddy (@yousuckatprogramming)
+# explained - https://youtu.be/D0sG2fj0G4Y
+# borrowed heavily from https://grml.org
+
+#
+
+. ~/.colors
+
+# Begin blinking text mode
+# I just use bold red here since my terminal has blinking disabled
+#
+# export LESS_TERMCAP_mb=$'\e[1;31m'
+export LESS_TERMCAP_mb="${Bred}"
+
+# Begin bold text mode
+# export LESS_TERMCAP_md=$'\e[1;31m'
+# export LESS_TERMCAP_md="${Bred}"
+export LESS_TERMCAP_md="${Byel}"
+
+# End all special formatting started by mb/md/etc.
+# export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_me="${nrm}"
+
+# End standout mode
+# export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_se="${nrm}"
+
+# Begin standout mode
+# search results - bold, yellow foreground, blue background.
+# export LESS_TERMCAP_so=$'\e[1;33;44m'
+export LESS_TERMCAP_so="${bld}${yel}${_blu}"
+
+# End underline mode
+# export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_ue="${nrm}"
+
+# Begin underline mode
+# underline and bold green
+# export LESS_TERMCAP_us=$'\e[4;1;32m'
+# export LESS_TERMCAP_us="${undl}${bld}${grn}"
+export LESS_TERMCAP_us="${undl}${bld}${wht}"
+
+# Begin reverse-video mode
+# export LESS_TERMCAP_mr=$'\e[7m'
+export LESS_TERMCAP_mr="${rvs}"
+
+# Begin dim/half-bright mode
+# export LESS_TERMCAP_mh=$'\e[2m'
+export LESS_TERMCAP_mh="${fnt}"
+
+# Begin subscript mode
+# (probably isn't supported)
+export LESS_TERMCAP_ZN=$'\e[74m'
+
+# End subscript mode
+# (probably isn't supported)
+export LESS_TERMCAP_ZV=$'\e[75m'
+
+# Begin superscript mode
+# (probably isn't supported)
+export LESS_TERMCAP_ZO=$'\e[73m'
+
+# End superscript mode
+# (probably isn't supported)
+export LESS_TERMCAP_ZW=$'\e[75m'
+
+# Finally wire up `man` to use `less`
+# this is usually the default but let's just be sure
+export MANPAGER='less'

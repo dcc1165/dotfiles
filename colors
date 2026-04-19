@@ -24,48 +24,64 @@ shopt -s xpg_echo
 # Bright Magenta  |      95     |    105      |
 # Bright Cyan     |      96     |    106      |
 # Bright White    |      97     |    107      |
-# +-------------------------------------------+
+#
+# +-----------------------------------+
+# |          Text Attributes          |
+# +-----------------------------------+
+# |  Attribute    |   Value           |
+# +-----------------------------------+
+# |  Noramal      |     0             |
+# |  Bold         |     1             |
+# |  Faint        |     2             |
+# |  Italic       |     3             |
+# |  underline    |     4             |
+# |  Blink        |     5 (no effect) |
+# |  Reverse      |     7             |
+# |  Invisible    |     8             |
+# |  Normal(2)    |    22             |
+# |  No Italic    |    23             |
+# |  No Underline |    24             |
+# |  No Blink     |    25 (no effect) |
+# |  No Reverse   |    27             |
+# +-----------------------------------+
 
-# +-----------------------+
-# |    Text Attributes    |
-# +-----------------------+
-      normal="\e[0m";       bold="\e[1m"
-       faint="\e[2m";     italic="\e[3m"
-   underline="\e[4m";      blink="\e[5m"
-     reverse="\e[7m";      invis="\e[8m"
-     normal2="\e[22m"; no_italic="\e[23m"
-no_underline="\e[24m";  no_blink="\e[25m"
-     no_rev="\e[27m"
+    nrm=$'\e[0m';        bld=$'\e[1m'
+    fnt=$'\e[2m';       ital=$'\e[3m'
+    undl=$'\e[4m';      blnk=$'\e[5m'
+    rvs=$'\e[7m';        inv=$'\e[8m'
+   nrm2=$'\e[22m';   no_ital=$'\e[23m'
+no_undl=$'\e[24m';  no_blink=$'\e[25m'
+ no_rvs=$'\e[27m'
 
 # +------------------------------+
 # |   Normal Foreground Colors   |
 # +------------------------------+
-  black="\e[30m";    red="\e[31m"
-  green="\e[32m"; yellow="\e[33m"
-   blue="\e[34m"; magenta="\e[35m"
-   cyan="\e[36m";   white="\e[37m"
-default="\e[39m"
+blk=$'\e[30m'; red=$'\e[31m'
+grn=$'\e[32m'; yel=$'\e[33m'
+blu=$'\e[34m'; mag=$'\e[35m'
+cyn=$'\e[36m'; wht=$'\e[37m'
+def=$'\e[39m'
 
 # +--------------------------------+
 # |    Bright Foreground Colors    |
 # +--------------------------------+
-  Bblack="\e[90m";     Bred="\e[91m";
-  Bgreen="\e[92m";  Byellow="\e[93m";
-   Bblue="\e[94m"; Bmagenta="\e[95m";
-   Bcyan="\e[96m";   Bwhite="\e[97m"
+Bblk=$'\e[90m'; Bred=$'\e[91m';
+Bgrn=$'\e[92m'; Byel=$'\e[93m';
+Bblu=$'\e[94m'; Bmag=$'\e[95m';
+Bcyn=$'\e[96m'; Bwht=$'\e[97m'
 
 # +--------------------------------+
 # |    Normal Background Colors    |
 # +--------------------------------+
-  _black="\e[40m";     _red="\e[41m";
-  _green="\e[42m";  _yellow="\e[43m";
-   _blue="\e[44m"; _magenta="\e[45m";
-   _cyan="\e[46m";   _white="\e[47m"
+_blk=$'\e[40m'; _red=$'\e[41m';
+_grn=$'\e[42m'; _yel=$'\e[43m';
+_blu=$'\e[44m'; _mag=$'\e[45m';
+_cyn=$'\e[46m'; _wht=$'\e[47m'
 
 # +--------------------------------+
 # |    Bright Background Colors    |
 # +--------------------------------+
-  _Bblack="\e[100m";     _Bred="\e[101m";
-  _Bgreen="\e[102m";  _Byellow="\e[103m";
-   _Bblue="\e[104m"; _Bmagenta="\e[105m";
-   _Bcyan="\e[106m";   _Bwhite="\e[107m"
+_Bblk=$'\e[100m'; _Bred=$'\e[101m';
+_Bgrn=$'\e[102m'; _Byel=$'\e[103m';
+_Bblu=$'\e[104m'; _Bmag=$'\e[105m';
+_Bcyn=$'\e[106m'; _Bwht=$'\e[107m'
