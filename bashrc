@@ -48,6 +48,7 @@ else
 fi
 
 export EDITOR=vim                         \
+       GROFF_NO_SGR=1                     \
        HISTCONTROL="ignoreboth:erasedups" \
        HISTTIMEFORMAT="[%D %T] "          \
        LC_COLLATE=C                       \
