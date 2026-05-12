@@ -33,6 +33,7 @@ set expandtab           " convert tabs to spaces
 set shiftwidth=4        " Reduce indent size to something less Gestapic
 syntax on               " enable syntax highlighting
 
+colorscheme koehler
 " Insert date/time in the format ddd-mm-yyy
 inoremap <F5> <C-R>=strftime("%d-%b-%Y")<CR>
 
