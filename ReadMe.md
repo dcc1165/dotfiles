@@ -8,15 +8,15 @@ dotfiles repo directory.
 
 All dot-files, OS agnostic (hopefully)
 
-.bashrc              - Bash runtime configuration
-.bash_profile        - Bash profile
-.vimrc               - VIM runtime configuarion
-.git-completion.sh   - Completion for Git repos
-.git-prompt.sh       - Git-aware prompt
-.gitconfig           - Global Git config
-.gitflow_export      - Global Git Flow
-.gitignore_global    - Global Git ignore
-.ssh/config          - Standard ssh_config file
+|.bashrc              | Bash runtime configuration
+|.bash_profile        | Bash profile
+|.vimrc               | VIM runtime configuarion
+|.git-completion.sh   | Completion for Git repos
+|.git-prompt.sh       | Git-aware prompt
+|.gitconfig           | Global Git config
+|.gitflow_export      | Global Git Flow
+|.gitignore_global    | Global Git ignore
+|.ssh/config          | Standard ssh_config file
 
 Future - Split .bashrc into different files:
 bash_functions       - User defined functions - maybe one file for each OS
