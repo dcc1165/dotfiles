@@ -316,36 +316,65 @@ fwip() {
 }
 
 getfunc() {
-   if [[ $# -eq 0 || $# -gt 2 ]]
-   then
-      echo "Usage: getfunc function-name [ filename ]"
-      return
-   fi
+    local nobat
+    local fnName
+    local fname
 
-   which bat >/dev/null 2>&1
-   [[ $? -eq 0 ]] && bat=" | bat -l bash"
+    if [[ $# -eq 0 || $# -gt 3 ]]
+    then
+       echo "Usage: getfunc [-p ] function-name [ filename ]"
+       return
+    fi
+ 
+    while [[ $# -ne 0 ]]; do
+        case $1 in
+            -p) nobat=1
+                shift
+                ;;
+ 
+            -*) echo "Invalid option $1"
+                return
+                ;;
 
-   if [[ $# -eq 1 ]]
-   then
-      if [[ -z "$(declare -F $1)" ]]
-      then
-         echo "$1 not found in environment"
-      else
-         cmd="declare -f $1 ${bat}"
-         eval $cmd
-      fi
-      return
-   else
-      fnName=$1; fname=$2
-      fn=$(grep -E "^[[:space:]]*(function[[:space:]]+)?${fnName}+[[:space:]]*\(\)" $fname)
-      [[ -z "$fn" ]] && { echo "$fnName not found in $fname"; return; }
-      fnBeg=$(grep -n "$fn" $fname | grep -v '#' | cut -d':' -f1)
-      fnEnd=$(tail -n +$fnBeg $fname | grep -n -m 1 -E '^[[:space:]]*}' | cut -d: -f1)
-      numlines=$((fnBeg + fnEnd -1))
-      cmd="sed -n '${fnBeg},${numlines}p' $fname ${bat}"
-      eval $cmd
-   fi
-}
+             *) fnName=$1
+                shift 1
+                fname=$1
+                shift 1
+                ;;
+        esac
+    done
+ 
+    [[ -z "$fname" ]] && fname="Env"
+    [[ -z "$fnName" ]] && { echo "Function name not specified."; return; }
+
+    # build command for bat or cat
+    which bat >/dev/null 2>&1
+    [[ $? -eq 0 ]] && bat=" | bat -l bash" || nobat=1  # 'bat' not found
+    [[ $nobat -eq 1 ]] && bat=" | cat | less"          # nobat=1 or -p
+ 
+    if [[ "$fname" == "Env" ]]
+    then
+       if [[ -z "$(declare -F $fnName)" ]]
+       then
+          echo "$fnName not found in environment"
+       else
+          cmd="declare -f $fnName ${bat}"
+          eval $cmd
+       fi
+       return
+    else
+       [[ ! -f $fname ]] && { echo "$fname not found"; return; }
+       greptext="^[[:space:]]*(function[[:space:]]+)?${fnName}+[[:space:]]*\(\)"
+       fn=$(grep -E "$greptext" $fname)
+       [[ -z "$fn" ]] && { echo "$fnName not found in $fname"; return; }
+
+       fnBeg=$(grep -n "$fn" $fname | grep -v '#' | cut -d':' -f1)
+       fnEnd=$(tail -n +$fnBeg $fname | grep -n -m 1 -E '^[[:space:]]*}' | cut -d: -f1)
+       numlines=$((fnBeg + fnEnd -1))
+       cmd="sed -n '${fnBeg},${numlines}p' $fname ${bat}"
+       eval $cmd
+    fi
+ }
 
 getpage() {
    if [[ -z "$1" ]]
@@ -388,6 +417,10 @@ ipowner() {
       flist="NetRange|CIDR|Organization|Address|City|StateProv|PostalCode|Country"
       whois $1 | egrep -e "$flist"
    fi
+}
+
+oct() {
+    printf "%o\n" $1
 }
 
 pwdb() {
