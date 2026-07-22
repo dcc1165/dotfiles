@@ -316,12 +316,9 @@ fwip() {
 }
 
 getfunc() {
-    local nobat
-    local fnName
-    local fname
+    local nobat fnName fname
 
-    if [[ $# -eq 0 || $# -gt 3 ]]
-    then
+    if [[ $# -eq 0 || $# -gt 3 ]]; then
        echo "Usage: getfunc [-p ] function-name [ filename ]"
        return
     fi
@@ -352,8 +349,7 @@ getfunc() {
     [[ $? -eq 0 ]] && bat=" | bat -l bash" || nobat=1  # 'bat' not found
     [[ $nobat -eq 1 ]] && bat=" | cat | less"          # nobat=1 or -p
  
-    if [[ "$fname" == "Env" ]]
-    then
+    if [[ "$fname" == "Env" ]]; then
        if [[ -z "$(declare -F $fnName)" ]]
        then
           echo "$fnName not found in environment"
