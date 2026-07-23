@@ -427,9 +427,9 @@ pwdb() {
     popd >/dev/null
 }
 
-sdig() {
-    digopts="+noquestion +noauthority +noadditional +nostats +nocomments +nocmd"
-    echo -e "\n$(dig $digopts $*)\n";
+sdig () {
+    local digopts=(+noquestion +noauthority +noadditional +nostats +nocomments +nocmd)
+    echo -e "\n$(dig "${digopts[@]}" "$@")\n"
 }
 
 subs() {
