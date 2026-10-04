@@ -405,14 +405,16 @@ hex() {
    printf "%x\n" $1
 }
 
-ipowner ()
-{
+ipowner () {
     if [[ -z "$1" ]]; then
-        echo "No IP range specified"
-    else
-        flist="NetRange|CIDR|Organization|Address|City|StateProv|PostalCode|Country"
-        whois $1 | egrep -e "$flist"
+        echo "Usage: ipowner <IP_ADDRESS>";
+        return 1
     fi
+
+    local flist="NetRange|inetnum|CIDR|Organization|org-name|role|descr|"
+    flist="${flist}Address|address|City|StateProv|PostalCode|Country|"
+    flist="${flist}country|e-mail|abuse-mailbox"
+    whois "$1" | egrep -i -e "^($flist):"
 }
 
 oct() {
