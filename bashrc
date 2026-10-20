@@ -230,7 +230,14 @@ fi
 if [[ $(uname) == "Darwin" ]]
 then
     function eject() {
-        dev=$(df | grep "$*" | tail -n 1 | cut -d ' ' -f1)
+        if [[ $# -eq 0 ]]; then
+            echo "Usage: eject [ dev | vol ]"
+            return
+        else
+           vol=$1
+        fi
+        [[ ${1: -1} == "/" ]] && vol="${1%?}"
+        dev=$(df | grep "$vol" | tail -n 1 | cut -d ' ' -f1)
         diskutil eject $dev
     }
 fi
