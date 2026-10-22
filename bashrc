@@ -457,46 +457,82 @@ swt() {
 }
 
 
-tolower () {
-    [[ $# -eq 0 ]] && {  echo "Usage: tolower <filename(s)>" >&2; return 1; }
-    
+############
+# tolower () {
+#    [[ $# -eq 0 ]] && {  echo "Usage: tolower <filename(s)>" >&2; return 1; }
+#     
+#    for i in "$@"; do
+#       if [[ ! -e "$i" ]]; then
+#          echo "$i does not exist" >&2
+#       else
+#          local lower="${i,,}"
+#          if [[ "$i" != "$lower" ]]; then
+#             echo "mv -v -- \"$i\" \"$lower"
+#          fi
+#       fi
+#    done
+# }
+# 
+# 
+# toupper() {
+#    [[ $# -eq 0 ]] && { echo "Usage: tolower <filename(s)>" >&2; return 1; }
+# 
+#    for i in "$@"; do
+#       if [[ ! -e "$i" ]]; then
+#          echo "$i does not exist" >&2
+#       else
+#          local upper="${i^^}"
+#          if [[ "$i" != "$upper" ]]; then
+#             mv -v -- "$i" "$upper"
+#          fi
+#       fi
+#    done
+# }
+####################
+
+_case_rename() {
+    local mode="$1"
+    shift
+
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: ${FUNCNAME[1]:-command} <filename(s)>" >&2
+        return 1
+    fi
+
     for i in "$@"; do
         if [[ ! -e "$i" ]]; then
             echo "$i does not exist" >&2
-        else
-            local lower="${i,,}"
-            if [[ "$i" != "$lower" ]]; then
-                echo "mv -v -- \"$i\" \"$lower"
-            fi
+            continue
         fi
+
+        local target
+        if [[ "$mode" == "-u" ]]; then
+            target="${i^^}"
+        else
+            target="${i,,}"
+        fi
+
+        # If the string you passed is already in the target case, skip
+        if [[ "$i" == "$target" ]]; then
+            continue
+        fi
+
+        # Temporary file shuffle workaround for case-insensitive filesystems
+        local tmp="${i}.$$"
+        # if mv -- "$i" "$tmp" && mv -- "$tmp" "$target"; then
+        mv -- "$i" "$tmp" && mv -- "$tmp" "$target"
+#            echo "'$i' -> '$target'"
+#        fi
     done
 }
 
-
-tolower () { 
-    [[ $# -eq 0 ]] && { echo "Usage: tolower <filename(s)>"; return; }
-    for i in $*;
-    do
-        if [[ ! -e $i ]]
-        then
-           echo "$i does not exist"
-        else
-           mv -v $i $(echo $i | tr [:upper:] [:lower:]);
-        fi
-    done
+##############
+tolower() { 
+    _case_rename "-l" "$@"
 }
 
-toupper() {
-   [[ $# -eq 0 ]] && { echo "Usage: tolower <filename(s)>"; return; }
-      for i in $*
-      do
-          if [[ ! -f $i ]];
-          then
-              echo "$i does not exist"
-          else
-             mv -v $i $(echo $i | tr '[:lower:]' '[:upper:]')
-          fi
-      done
+toupper() { 
+    _case_rename "-u" "$@"
 }
 
 rmloc() {
