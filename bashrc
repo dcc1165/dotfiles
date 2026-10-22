@@ -456,6 +456,23 @@ swt() {
    echo -ne "\033]0;$title\007"
 }
 
+
+tolower () {
+    [[ $# -eq 0 ]] && {  echo "Usage: tolower <filename(s)>" >&2; return 1; }
+    
+    for i in "$@"; do
+        if [[ ! -e "$i" ]]; then
+            echo "$i does not exist" >&2
+        else
+            local lower="${i,,}"
+            if [[ "$i" != "$lower" ]]; then
+                echo "mv -v -- \"$i\" \"$lower"
+            fi
+        fi
+    done
+}
+
+
 tolower () { 
     [[ $# -eq 0 ]] && { echo "Usage: tolower <filename(s)>"; return; }
     for i in $*;
