@@ -296,15 +296,15 @@ then
    }
 fi
 
-funcdef() {
-   declare -F $1 >/dev/null 2>&1
-   [[ $? -ne 0 ]] && { echo "$1 is not a function"; return; }
-
-   cmd="declare -f $1 "
-   which bat 2>/dev/null
-   [[ $? -eq 0 ]] && cmd="$cmd | bat -l bash"
-   eval $cmd
-}
+# funcdef() {
+#    declare -F $1 >/dev/null 2>&1
+#    [[ $? -ne 0 ]] && { echo "$1 is not a function"; return; }
+# 
+#    cmd="declare -f $1 "
+#    which bat 2>/dev/null
+#    [[ $? -eq 0 ]] && cmd="$cmd | bat -l bash"
+#    eval $cmd
+# }
 
 fwip() {
    IFS='
