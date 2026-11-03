@@ -227,19 +227,20 @@ then
    }
 fi
 
-if [[ $(uname) == "Darwin" ]]
-then
-    function eject() {
-        if [[ $# -eq 0 ]]; then
-            echo "Usage: eject [ dev | vol ]"
-            return
-        else
-           vol=$1
-        fi
-        [[ ${1: -1} == "/" ]] && vol="${1%?}"
-        dev=$(df | grep "$vol" | tail -n 1 | cut -d ' ' -f1)
-        diskutil eject $dev
-    }
+if [[ $(uname) == "Darwin" ]]; then
+   eject() {
+      local target="${1%/}"
+      [[ -z "$target" ]] && { echo "Usage: eject [dev|vol]" >&2; return 1; }
+
+      local dev="${target#/dev/}"
+      [[ "$dev" != disk* ]] && dev=$(stat -f "%Sd" "/Volumes/$target" 2>/dev/null)
+
+      if [[ -n "$dev" ]]; then
+         diskutil eject "$dev"
+      else 
+         echo "eject: not found: $1" >&2; return 1;
+      fi
+   }
 fi
 
 epath() {
