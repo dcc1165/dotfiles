@@ -11,4 +11,6 @@
 *.mpg
 *.pdf
 *.dmg
+*.sw[a-p]
 __pycache__
+._*
