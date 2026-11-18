@@ -27,14 +27,11 @@ set -o notify
 # FIXME: Linux and Homebrew on Intel use /usr/local/bin at the
 #        beginning of PATH; however, the line is redundant.
 #
-if [[ "$OS" == "Darwin" ]]
-then
-   if [[ "$(uname -m)" == "arm64" ]]
-   then
+if [[ "$OS" == "Darwin" ]]; then
+   if [[ "$(uname -m)" == "arm64" ]]; then
       export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
       # Enable bash competion (from HomeBrew)
-      if [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]]
-      then
+      if [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]]; then
           . "/opt/homebrew/etc/profile.d/bash_completion.sh"
       fi
    else
@@ -56,8 +53,7 @@ export EDITOR=vim                         \
        LUA_INIT=@/$HOME/devel/lua/rc.lua
 
 # Directory colorization
-if [[ "$OS" == "Darwin" ]]
-then
+if [[ "$OS" == "Darwin" ]]; then
    # export LSCOLORS="GxfxcxdxCxegedabagacad"
    echo "export LSCOLORS=\"GxfxcxdxCxegedabagacad\"" >~/.ls_colors
 else
@@ -157,8 +153,7 @@ alias xssh='ssh -o forwardx11=yes'
 # |               |
 # `---------------.
 
-if [[ "$OS" == "Darwin" ]]
-then
+if [[ "$OS" == "Darwin" ]]; then
    function allbrew() {
        brew formulae | grep "$1" | pr -4 -t
    }
@@ -169,18 +164,15 @@ then
    }
 fi
 
-if [[ ! -z "$(which bat 2>/dev/null)" ]]
-then
+if [[ ! -z "$(which bat 2>/dev/null)" ]]; then
    bathelp () {
       "$@" --help 2>&1 | bat --plain --language=help
    }
 fi
 
-if [[ ! -z "$(which c1541 2>/dev/null)" ]]
-then
+if [[ ! -z "$(which c1541 2>/dev/null)" ]]; then
    cbmdir() {
-      if [[ -z "$1" ]]
-      then
+      if [[ -z "$1" ]]; then
          echo "Disk not specified.";
       else
          oldIFS="$IFS"
@@ -205,21 +197,18 @@ detab() {
 }
 
 dirsize() {
-   for d in $(find [A-z]* -type d -maxdepth 0)
-   do
+   for d in $(find [A-z]* -type d -maxdepth 0); do
        du -sh $d
    done
 }
 
-if [[ $(uname) == "Linux" ]]
-then
+if [[ $(uname) == "Linux" ]]; then
    dircols() {
       dircolors -b ~/.dircolors >~/.ls_colors
       . ~/.ls_colors
    }
    dupedisk() {
-      if [[ $# -ne 2 ]]
-      then
+      if [[ $# -ne 2 ]]; then
          echo "Usage: dupedisk src-disk dst-disk"
       else
          sfdisk -d $1 | sed -e 's:$1:$2:g' | sfdisk $2
@@ -266,8 +255,7 @@ ethcode() {
 }
 
 # Darwin
-if [[ "$OS" == "Darwin" ]]
-then
+if [[ "$OS" == "Darwin" ]]; then
    function fix() {
       case $1 in
           "ql"|"quicklook")
@@ -282,30 +270,18 @@ then
               ;;
       esac
       echo "Fixing $svcName..."
-      if [[ -z "$(which pidof)" ]]
-      then
+      if [[ -z "$(which pidof)" ]]; then
           pidlist="$(ps -aef | grep -i $svcName | grep -v grep | awk ' {FS=" "} {ORS=" "} {print $2}')"
       else
           pidlist="$(pidof $srvName)"
       fi
    
-      for pid in $pidlist
-      do
+      for pid in $pidlist; do
          echo "Killing PID: $pid"
          kill -9 $pid
       done
    }
 fi
-
-# funcdef() {
-#    declare -F $1 >/dev/null 2>&1
-#    [[ $? -ne 0 ]] && { echo "$1 is not a function"; return; }
-# 
-#    cmd="declare -f $1 "
-#    which bat 2>/dev/null
-#    [[ $? -eq 0 ]] && cmd="$cmd | bat -l bash"
-#    eval $cmd
-# }
 
 fwip() {
    IFS='
@@ -313,8 +289,7 @@ fwip() {
 
    fw_wan="$(ssh home-pfsense ifconfig re0 | grep 'inet ')"
    echo $fw_wan | grep "inet " >/dev/null 2>&1
-   if [[ $? -ne 0 ]]
-   then
+   if [[ $? -ne 0 ]]; then
       echo "WAN IP not assigned"
       exit
    fi
@@ -353,13 +328,20 @@ getfunc() {
     [[ -z "$fnName" ]] && { echo "Function name not specified."; return; }
 
     # build command for bat or cat
-    which bat >/dev/null 2>&1
-    [[ $? -eq 0 ]] && bat=" | bat -l bash" || nobat=1  # 'bat' not found
-    [[ $nobat -eq 1 ]] && bat=" | cat | less"          # nobat=1 or -p
+    if command -v bat &> /dev/null; then
+        bat=" | bat -l bash"
+    elif command -v batcat &> /dev/null; then
+        bat=" | batcat -l bash"
+    else
+        bat=" | cat | less"
+    fi 
+
+#    which bat >/dev/null 2>&1
+#    [[ $? -eq 0 ]] && bat=" | bat -l bash" || nobat=1  # 'bat' not found
+#    [[ $nobat -eq 1 ]] && bat=" | cat | less"          # nobat=1 or -p
  
     if [[ "$fname" == "Env" ]]; then
-       if [[ -z "$(declare -F $fnName)" ]]
-       then
+       if [[ -z "$(declare -F $fnName)" ]]; then
           echo "$fnName not found in environment"
        else
           cmd="declare -f $fnName ${bat}"
@@ -381,8 +363,7 @@ getfunc() {
  }
 
 getpage() {
-   if [[ -z "$1" ]]
-   then
+   if [[ -z "$1" ]]; then
       echo "USAGE: getpage url-to-get"
    else
       # lynx -dump -nolist $1
@@ -391,8 +372,7 @@ getpage() {
 }
 
 getmac() {
-   for i in $*
-   do
+   for i in $*; do
 #       echo "$i: $(ifconfig $i | tail +2 | tr -s [:space:]| cut -d' '  -f 2)"
        echo "$i: $(ifconfig $i | grep ether | tr -s [:space:] | cut -d' ' -f2)"
    done
@@ -457,39 +437,6 @@ swt() {
    echo -ne "\033]0;$title\007"
 }
 
-
-############
-# tolower () {
-#    [[ $# -eq 0 ]] && {  echo "Usage: tolower <filename(s)>" >&2; return 1; }
-#     
-#    for i in "$@"; do
-#       if [[ ! -e "$i" ]]; then
-#          echo "$i does not exist" >&2
-#       else
-#          local lower="${i,,}"
-#          if [[ "$i" != "$lower" ]]; then
-#             echo "mv -v -- \"$i\" \"$lower"
-#          fi
-#       fi
-#    done
-# }
-# 
-# 
-# toupper() {
-#    [[ $# -eq 0 ]] && { echo "Usage: tolower <filename(s)>" >&2; return 1; }
-# 
-#    for i in "$@"; do
-#       if [[ ! -e "$i" ]]; then
-#          echo "$i does not exist" >&2
-#       else
-#          local upper="${i^^}"
-#          if [[ "$i" != "$upper" ]]; then
-#             mv -v -- "$i" "$upper"
-#          fi
-#       fi
-#    done
-# }
-####################
 
 _case_rename() {
     local mode="$1"
@@ -556,8 +503,7 @@ watchfile() {
    
    [[ -z "$fname" ]] && fname="*"
 #   [[ "$1" == "-h" ]] && opt="-ldh"
-   while [ 1 ]
-   do
+   while [ 1 ]; do
       tput home
       echo -e "\n"
       ls -ld  $fname | tr -s [:space:] | cut -d' ' -f5,9
