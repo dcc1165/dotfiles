@@ -100,16 +100,11 @@ nrm="\[\e[0m\]"         # No color
 
 # export PS1="${bold}[${red}\u ${rset}${yel}\W${rset}${bold}]$ ${rset}"
 export PS1="${bold}[${red}\u@\h${mag}\$(__git_ps1) ${nrm}${yel}\W${nrm}${bold}]$ ${nrm}"
-# export PS1="\[\e[1m\][\[\e[1;31m\]\u \$(__git_ps1)\[\e[0m\e[1;33m\]\W\[\e[0m\e[1m\]]$ \[\e[0m\]"
 
 #
 # Set colors for LESS
 #
 . ~/.less_colors
-# if [[ ! -f ~/.ls_colors ]]
-# then
-#    [[ -f ~/.dircolors ]] && dircolors -b ~/.dircolors >.ls_colors
-# fi
 
 #
 # User specific aliases and functions
@@ -117,7 +112,6 @@ export PS1="${bold}[${red}\u@\h${mag}\$(__git_ps1) ${nrm}${yel}\W${nrm}${bold}]$
 # TODO: Separate os-specific aliases (Darwin vs Linux)
 #
 
-# alias batlvl='printf "Charge Level: %d%%" $(system_profiler SPPowerDataType | grep "State of Charge" | cut -d: -f2)'
 alias ctt='echo -ne "\033]1;\007"'
 alias cwt='echo -ne "\033]0;\007"'
 alias grep="grep --color=auto"
@@ -327,14 +321,14 @@ getfunc() {
     [[ -z "$fname" ]] && fname="Env"
     [[ -z "$fnName" ]] && { echo "Function name not specified."; return; }
 
-    # build command for bat or cat
-    if command -v bat &> /dev/null; then
-        bat=" | bat -l bash"
-    elif command -v batcat &> /dev/null; then
-        bat=" | batcat -l bash"
-    else
-        bat=" | cat | less"
-    fi 
+    bat=" | cat | less"
+    if [[ -z "$nobat" ]]; then
+        if command -v bat &> /dev/null; then
+            bat=" | bat -l bash"
+        elif command -v batcat &> /dev/null; then
+            bat=" | batcat -l bash"
+        fi
+    fi
 
 #    which bat >/dev/null 2>&1
 #    [[ $? -eq 0 ]] && bat=" | bat -l bash" || nobat=1  # 'bat' not found
