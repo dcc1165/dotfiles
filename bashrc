@@ -329,10 +329,6 @@ getfunc() {
             bat=" | batcat -l bash"
         fi
     fi
-
-#    which bat >/dev/null 2>&1
-#    [[ $? -eq 0 ]] && bat=" | bat -l bash" || nobat=1  # 'bat' not found
-#    [[ $nobat -eq 1 ]] && bat=" | cat | less"          # nobat=1 or -p
  
     if [[ "$fname" == "Env" ]]; then
        if [[ -z "$(declare -F $fnName)" ]]; then
