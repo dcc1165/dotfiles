@@ -17,6 +17,9 @@ System dot-files, OS agnostic (hopefully)
 .gitconfig           - Global Git config
 .gitflow_export      - Global Git Flow
 .gitignore_global    - Global Git ignore
+.ssh/config          - SSH client config.  TODO: modify installer
+                       to check SSH version and remove WarnWeakCrypto no-pq-kex
+                       if version < 10.1
 
 Future - Split .bashrc into different files:
 bash_functions       - User defined functions - maybe one file for each OS
